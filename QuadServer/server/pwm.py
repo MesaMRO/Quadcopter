@@ -7,7 +7,7 @@ class signal:
   def __init__(self,number):
     if not os.path.exists(pwmpath.format(*pins[number])):
       os.system('echo MULTC > /sys/devices/bone_capemgr.8/slots')
-    self.pwmfile=open(pwmpath.format(*pins[number]))
+    self.pwmfile=open(pwmpath.format(*pins[number]),'w')
   def set_width(self,width):
     self.pwmfile.write(str(width))
-
+    self.pwmfile.seek(0)
