@@ -1,14 +1,24 @@
-## Quadcopter
+# [MRO](/)/Quadcopter
 
-*MRO attempt of building a quad-copter, a rotorcraft lifted and propelled by four rotors, from scratch.*
+MRO attempt of building a quad-copter, a rotorcraft lifted and propelled by four rotors, from scratch.
 
-##### Hardware
-- [Beaglebone Black](http://beagleboard.org/Products/BeagleBone%20Black) — Single-board computer
-- ...
+## Git
 
-##### Software
-- ...
+### Download & Install
+- Mac
+  - [GitHub for Mac](http://mac.github.com/)
+	- [Git for Mac](http://code.google.com/p/git-osx-installer/downloads/list)
+- Windows
+	- [GitHub for Windows](http://windows.github.com/)
+	- [Git for Windows](http://code.google.com/p/msysgit/downloads/list?q=full+installer+official+git)
+- Linux
+	- [Git for Linux and Unix](http://git-scm.com/download/linux/)
 
-- - -
-
-#### [San Diego Mesa Robotics Organization](http://example.com/)
+### Tutorials
+[Crash-course](https://github.com/SweedJesus/Beaglebone-Black-Stuff/blob/master/Git_help.md) (started by Nils, changes welcome)
+- GitHub
+	- https://help.github.com/
+- Git
+	- http://www.ralfebert.de/tutorials/git/
+	- http://book.git-scm.com/
+	- http://gitbyexample.org/
