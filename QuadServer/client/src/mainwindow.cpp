@@ -4,7 +4,7 @@
 #include <QInputDialog>
 #include <QtNetwork/QTcpSocket>
 #include <QByteArray>
-#include <SDL.h>
+#include "SDL.h"
 #include <QTimer>
 
 SDL_Joystick *js;
@@ -22,6 +22,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 int vals[4]={0,0,0,0};
+int oldvals[4]={0,0,0,0};
 QTcpSocket *sock;
 
 void MainWindow::update(int s,int v) {
@@ -40,6 +41,10 @@ void MainWindow::send(int s,int v) {
         char dat[8];
         int vals[2];
     } info;
+    /*if(oldvals[s]==v) {
+        return;
+    }*/
+    oldvals[s]=v;
     info.vals[0]=s;
     info.vals[1]=v;
     printf("%d: %d\n",s,v);
@@ -70,7 +75,7 @@ void MainWindow::on_slider4_valueChanged(int position)
 QTimer *timer;
 void MainWindow::on_actionOpen_IP_triggered()
 {
-    QString ip = QInputDialog::getText(this,"Gimme Ur IP","where is robot");
+    QString ip = QInputDialog::getText(this,"Gimme Ur IP","where is robit");
     if(sock) {
         delete sock;
     }
@@ -96,53 +101,20 @@ void MainWindow::on_stopbutton_pressed()
     ui->slider2->setValue(0);
     ui->slider3->setValue(0);
     ui->slider4->setValue(0);
+    t_fix=1;
 }
 
 void MainWindow::timerEvent() {
     //fl,fr,rl,rr
     int i;
     SDL_JoystickUpdate();
-    int thrust[4]={0,0,0,0};
+//    int thrust[4]={0,0,0,0};
     short throttle = SDL_JoystickGetAxis(js,3);
     short rotate = SDL_JoystickGetAxis(js,2);
     short forward = SDL_JoystickGetAxis(js,1);
     short strafe = SDL_JoystickGetAxis(js,0);
-    int long_throttle = 0x7FFF-throttle;
-    int long_strafe = strafe;
-    int long_forward = 0-forward;
-    int long_rotate = 0-rotate;
-    long_throttle/=818;
-    long_strafe/=6550;
-    long_forward/=6550;
-    long_rotate/=6550;
-    if(t_fix&&long_throttle==40) {
-        long_throttle=0;
-    } else {
-        t_fix=0;
-    }
-    for(int i=0;i<4;i++) {
-        thrust[i]=long_throttle;
-    }
-    thrust[0]-=long_forward;
-    thrust[1]-=long_forward;
-    thrust[2]+=long_forward;
-    thrust[3]+=long_forward;
-    thrust[0]-=long_strafe;
-    thrust[1]+=long_strafe;
-    thrust[2]-=long_strafe;
-    thrust[3]+=long_strafe;
-    thrust[0]-=long_rotate;
-    thrust[1]+=long_rotate;
-    thrust[2]+=long_rotate;
-    thrust[3]-=long_rotate;
-    ui->slider1->setValue(thrust[0]);
-    ui->slider2->setValue(thrust[1]);
-    ui->slider3->setValue(thrust[2]);
-    ui->slider4->setValue(thrust[3]);
-    for(i=0;i<4;i++) {
-        if(thrust[i]<0) {
-            thrust[i]=0;
-        }
-        send(i,thrust[i]);
-    }
+    send(0,throttle);
+    send(1,rotate);
+    send(2,forward);
+    send(3,strafe);
 }
