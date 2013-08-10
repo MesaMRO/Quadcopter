@@ -4,7 +4,7 @@ path = '/sys/devices/ocp.2/P{0}_{1}.{2}/duty'
 class signal:
   pwmfile=None
   def __init__(self,number):
-    pwmfile=open(path.format(*pins[number]))
+    self.pwmfile=open(path.format(*pins[number]))
   def setwidth(self,width):
-    pwmfile.write(str(width))
+    self.pwmfile.write(str(width))
 
