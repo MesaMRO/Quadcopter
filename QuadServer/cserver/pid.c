@@ -1,14 +1,15 @@
 #include <stdlib.h>
 #include "pid.h"
 
+// Initialize PID [Proportional Integral Derivitive] struct with constant multipliers
 pid *init_pid(float kp, float ki, float kd) {
-  pid *new_axis = malloc(sizeof(pid));
-  new_axis->kp=kp;
-  new_axis->ki=ki;
-  new_axis->kd=kd;
-  new_axis->i=0;
-  new_axis->d=0;
-  return new_axis;
+	pid *new_axis = malloc(sizeof(pid));
+	new_axis->kp = kp;
+	new_axis->ki = ki;
+	new_axis->kd = kd;
+	new_axis->i = 0;
+	new_axis->d = 0;
+	return new_axis;
 }
 
 double update_pid(pid *axis,double target,double value) {
@@ -17,8 +18,8 @@ double update_pid(pid *axis,double target,double value) {
   double p_val;
   double i_val;
   double d_val;
-  err=target-value;
-  p_val=err*axis->kp;
+  err = target - value;
+  p_val = err * axis->kp;
   d_val=axis->kd*(err-axis->d);
   axis->d=err;
   axis->i+=err;

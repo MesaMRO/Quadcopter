@@ -4,7 +4,7 @@
 #include <QInputDialog>
 #include <QtNetwork/QTcpSocket>
 #include <QByteArray>
-#include <SDL.h>
+#include "SDL.h"
 #include <QTimer>
 
 SDL_Joystick *js;
