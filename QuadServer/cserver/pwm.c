@@ -1,7 +1,14 @@
 #include "pwm.h"
 
-int pwm_pins[][]={{9,14,14},{9,16,15},{9,21,16},{9,22,17}};
+int pwm_pins[][3] = {
+	{9, 14, 14},
+	{9, 16, 15},
+	{9, 21, 16},
+	{9, 22, 17}
+};
+
 const char *path = "/sys/device/ocp.2/P%d_%d.%d/duty";
+
 pwm *init_pwm(int pin) {
   pwm *motor = malloc(sizeof(pwm));
   char filename[sizeof(path)+1];

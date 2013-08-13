@@ -1,13 +1,16 @@
+// Pull data from IMU (PIM data)
+// PID loop speed must account for IMU speed and client network speed
 
+// PID [Proportional Integral Derivative] struct for individual axis
 typedef struct {
-	double kp;	// Constant proportional multiplier
-	double ki;	// Constant integral multiplier
-	double kd;	// Constant derivitave multiplier
+	double kp;	// Proportional constant
+	double ki;	// Integral constant
+	double kd;	// Derivatave constant
 	double i;	// Integral
-	double d;	// Derivitive
+	double d;	// Derivative
 } pid;
 
-// Initialize PID [Proportional Integral Derivitive] struct with constant multipliers
+// Initialize PID  struct with constant multipliers
 pid *init_pid(float kp, float ki, float kd);
 
 double update_pid(pid *axis, double target, double value);
