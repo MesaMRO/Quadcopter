@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct {
+/*typedef struct {
   FILE *pwmfile;
-} pwm;
+} pwm;*/
   
-pwm *init_pwm(int pin);
-void set_duty(pwm *motor,int duty);
+FILE *init_pwm(int pin);
+void set_duty(FILE *motor,int duty);

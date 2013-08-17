@@ -6,3 +6,4 @@
 // int server_socket;
 
 // struct sockaddr_in;
+int init_net();

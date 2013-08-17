@@ -1,24 +1,38 @@
 #include "pwm.h"
+#include <stdio.h>
 
 int pwm_pins[][3] = {
-	{9, 14, 14},
-	{9, 16, 15},
-	{9, 21, 16},
-	{9, 22, 17}
+	{9, 14, 14},//rr
+	{9, 16, 15},//rl
+	{9, 21, 16},//fr
+	{9, 22, 17}//fl
 };
 
-const char *path = "/sys/device/ocp.2/P%d_%d.%d/duty";
+const char path[] = "/sys/devices/ocp.2/P%d_%d.%d/duty";
 
-pwm *init_pwm(int pin) {
-  pwm *motor = malloc(sizeof(pwm));
+FILE *init_pwm(int pin) {
+  FILE *test;
+  /*pwm *motor = malloc(sizeof(pwm));
+  if(!motor) {
+    return 0;
+  }*/
   char filename[sizeof(path)+1];
   sprintf(filename,path,pwm_pins[pin][0],pwm_pins[pin][1],pwm_pins[pin][2]);
-  motor->pwmfile = fopen(filename,"w");
-  return motor;
+  test = fopen(filename,"w");
+  if(!test) {
+    printf("failed to open file: %s\n",filename);
+    return 0;
+  }
+  //printf("%p\n",motor->pwmfile);
+  //motor->pwmfile = test;
+  set_duty(test,1000000);
+  printf("motor %d init\n",pin);
+  return test;
 }
 
-void set_duty(pwm *motor,int duty) {
-  fprintf(motor->pwmfile,"%d",duty);
-  fflush(motor->pwmfile);
-  fseek(motor->pwmfile,0,SEEK_SET);
+void set_duty(FILE *motor,int duty) {
+  fprintf(motor,"%d",duty);
+  printf("power %d\n",duty);
+  fflush(motor);
+  fseek(motor,0,SEEK_SET);
 }
