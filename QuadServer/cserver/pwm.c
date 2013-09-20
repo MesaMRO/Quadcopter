@@ -2,8 +2,8 @@
 #include <stdio.h>
 
 int pwm_pins[][3] = {
-	{9, 14, 14},//rr
-	{9, 16, 15},//rl
+	{8, 13, 18},//rr
+	{8, 19, 19},//rl
 	{9, 21, 16},//fr
 	{9, 22, 17}//fl
 };
@@ -30,10 +30,18 @@ FILE *init_pwm(int pin) {
   return test;
 }
 
+<<<<<<< HEAD
 // Set motor duty value via its respective duty file
 void set_duty(FILE *motor, int duty) {
 	fprintf(motor, "%d", duty);
 	printf("power %d\n",duty);
 	fflush(motor);
 	fseek(motor,0,SEEK_SET);
+=======
+void set_duty(FILE *motor,int duty) {
+  fprintf(motor,"%d",duty);
+  //printf("power %d\n",duty);
+  fflush(motor);
+  fseek(motor,0,SEEK_SET);
+>>>>>>> 589bae4a7216ce11db80cd562162bc5624b07ecb
 }

@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include "pid.h"
 
-// Initialize PID [Proportional Integral Delta] struct with constant multipliers
+// Initialize PID [Proportional Integral Deravitive] struct with constant multipliers
 pid *init_pid(float kp, float ki, float kd) {
 	pid *new_axis = malloc(sizeof(pid));
 	new_axis->kp = kp;
@@ -14,6 +14,7 @@ pid *init_pid(float kp, float ki, float kd) {
 
 double update_pid(pid *axis, double target, double value) {
 	double err;
+	double output;
 	double p_val;
 	double i_val;
 	double d_val;
@@ -25,12 +26,7 @@ double update_pid(pid *axis, double target, double value) {
 	// Update derivative and integral values
 	axis->d = err;
 	axis->i += err;
-	if(axis->i > 15) {
-		axis->i = 15;
-	}
-	if(axis->i < -15) {
-		axis->i = -15;
-	}
+	
 	i_val = axis->i * axis->ki;
 	return p_val + i_val + d_val;
 }
