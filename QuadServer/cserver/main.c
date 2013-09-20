@@ -12,9 +12,9 @@ int main(int argc,char **argv) {
   fd_set net_set;
   double oldmag,magdiff;
   struct timeval timeout;
-  int axes[4]={0,0,0,0};
-  int x_adjust,y_adjust,z_adjust;
-  int sock = init_net();
+  int axes[4] = {0,0,0,0}; // 
+  int x_adjust, y_adjust, z_adjust;
+  int clientSock = init_net(); // Initialize network, get client socket
   x=init_pid(1,1,1);
   y=init_pid(1,1,1);
   z=init_pid(1,1,1);
@@ -29,11 +29,11 @@ int main(int argc,char **argv) {
   while(1) {
     printf("test\n");
     FD_ZERO(&net_set);
-    FD_SET(sock,&net_set);
-    if(select(sock+1,&net_set,(fd_set *) 0,(fd_set *) 0, &timeout)==1) {
-      printf("sock\n");
-      //read from sock
-      update_axis(sock,&axes);
+    FD_SET(clientSock, &net_set);
+    if(select(clientSock + 1, &net_set, (fd_set *) 0, (fd_set *) 0, &timeout) == 1) {
+      printf("clientSock\n");
+      //read from clientSock
+      update_axis(clientSock, &axes);
     } else {
       //update imu
       update_imu(imu);
@@ -50,7 +50,7 @@ int main(int argc,char **argv) {
       y_adjust = update_pid(y,axes[2]*.00061,imu->mpu.fusedEuler[VEC3_Y] * RAD_TO_DEGREE);
       z_adjust = update_pid(z,axes[3]*.00061,magdiff);
       oldmag=imu->mpu.fusedEuler[VEC3_Z] * RAD_TO_DEGREE;
-      set_duty(motors[0],1000000+axes[0]*14+x_adjust-y_adjust+z_adjust);
+      set_duty(motors[0], 1000000 + axes[0] * 14 + x_adjust - y_adjust + z_adjust);
       set_duty(motors[1],1000000+axes[0]*14-x_adjust-y_adjust-z_adjust);
       set_duty(motors[2],1000000+axes[0]*14+x_adjust+y_adjust-z_adjust);
       set_duty(motors[3],1000000+axes[0]*14-x_adjust+y_adjust+z_adjust);

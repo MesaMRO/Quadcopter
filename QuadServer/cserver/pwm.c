@@ -30,9 +30,10 @@ FILE *init_pwm(int pin) {
   return test;
 }
 
-void set_duty(FILE *motor,int duty) {
-  fprintf(motor,"%d",duty);
-  printf("power %d\n",duty);
-  fflush(motor);
-  fseek(motor,0,SEEK_SET);
+// Set motor duty value via its respective duty file
+void set_duty(FILE *motor, int duty) {
+	fprintf(motor, "%d", duty);
+	printf("power %d\n",duty);
+	fflush(motor);
+	fseek(motor,0,SEEK_SET);
 }

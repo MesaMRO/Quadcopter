@@ -1,9 +1,5 @@
-#include <sys/types.h>
-#include <sys/socket.h>
+// Computer-Beaglebone networking
 
-// File descriptors to indentify client and server sockets
-// int client_socket;
-// int server_socket;
-
-// struct sockaddr_in;
+// int main();
 int init_net();
+int update_axis(int readSocketFD, int *axes);
