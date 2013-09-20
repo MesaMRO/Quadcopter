@@ -1,0 +1,8 @@
+cp ../../Device_Tree/MULTC-00A0.dtbo /lib/firmware/
+echo MULTC > /sys/devices/bone_capemgr.8/slots
+sleep 1
+echo 1000000 > /sys/devices/ocp.2/P8_13.18/duty
+echo 1000000 > /sys/devices/ocp.2/P8_19.19/duty
+echo 1000000 > /sys/devices/ocp.2/P9_21.16/duty
+echo 1000000 > /sys/devices/ocp.2/P9_22.17/duty
+

@@ -25,12 +25,7 @@ double update_pid(pid *axis, double target, double value) {
 	// Update derivative and integral values
 	axis->d = err;
 	axis->i += err;
-	if(axis->i > 15) {
-		axis->i = 15;
-	}
-	if(axis->i < -15) {
-		axis->i = -15;
-	}
+	
 	i_val = axis->i * axis->ki;
 	return p_val + i_val + d_val;
 }
