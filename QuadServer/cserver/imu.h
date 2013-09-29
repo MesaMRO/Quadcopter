@@ -4,3 +4,4 @@ typedef struct {
 } imu_t;
 imu_t *init_imu();
 void update_imu(imu_t *imu);
+int set_cal(int mag, char *cal_file);

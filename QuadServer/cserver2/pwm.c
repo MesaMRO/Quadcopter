@@ -1,23 +1,19 @@
 #include "pwm.h"
-#include <stdio.h>
 
 int pwm_pins[][3] = {
-	{9, 14, 14},//rr
-	{9, 16, 15},//rl
-	{9, 21, 16},//fr
-	{9, 22, 17}//fl
+	{9, 14, 14},
+	{9, 16, 15},
+	{9, 21, 16},
+	{9, 22, 17}
 };
 
 const char *path = "/sys/device/ocp.2/P%d_%d.%d/duty";
 
 pwm *init_pwm(int pin) {
-  FILE *test;
   pwm *motor = malloc(sizeof(pwm));
-  char filename[sizeof(path)+10];
+  char filename[sizeof(path)+1];
   sprintf(filename,path,pwm_pins[pin][0],pwm_pins[pin][1],pwm_pins[pin][2]);
-  test = fopen(filename,"w");
-  printf("asdf\n");
-  set_duty(motor,1000000);
+  motor->pwmfile = fopen(filename,"w");
   return motor;
 }
 
